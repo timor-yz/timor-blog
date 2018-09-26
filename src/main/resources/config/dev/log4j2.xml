@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- log4j2.xml配置参考： -->
+<!-- https://www.cnblogs.com/hafiz/p/6170702.html -->
+<!-- https://www.cnblogs.com/SummerinShire/p/6498977.html -->
+<!-- -->
+<!-- 日志级别以及优先级排序：OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!-- OFF : 最高等级的，用于关闭所有日志记录 -->
+<!-- FATAL : 输出每个严重的错误事件将会导致应用程序的退出的日志 -->
+<!-- ERROR : 输出错误信息日志 -->
+<!-- WARN : 输出警告及warn以上级别的日志 -->
+<!-- INFO : 消息在粗粒度级别上突出强调应用程序的运行过程 -->
+<!-- DEBUG : 指出细粒度信息事件对调试应用程序是非常有帮助的 -->
+<!-- TRACE : 是追踪，就是程序推进以下，你就可以写个trace输出，所以trace应该会特别多，不过没关系，我们可以设置最低日志级别不让他输出 -->
+<!-- ALL : 最低等级的，用于打开所有日志记录 -->
+<!-- 程序会打印高于或等于所设置级别的日志，设置的日志等级越高，打印出来的日志就越少 -->
+<!-- -->
+<!-- status : 这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，会看到log4j2内部各种详细输出 -->
+<!-- monitorInterval：用于指定log4j自动重新配置的监测间隔时间，单位是s，最小是5s -->
+<Configuration status="OFF" monitorInterval="1800">
+	<Properties>
+		<!-- 日志文件输出目录 -->
+		<!-- <Property name="LOG_HOME" value="${sys:catalina.home}/logs" /> <Property 
+			name="WARN_LOG_HOME" value="${sys:catalina.home}/logs/warn" /> <Property 
+			name="ERROR_LOG_HOME" value="${sys:catalina.home}/logs/error" /> -->
+		<Property name="LOG_HOME" value="E:/logs" />
+		<Property name="WARN_LOG_HOME" value="E:/logs/warn" />
+		<Property name="ERROR_LOG_HOME" value="E:/logs/error" />
+
+		<!-- 日志文件名称 -->
+		<Property name="FILE_NAME">info</Property>
+		<Property name="WARN_FILE_NAME">warn</Property>
+		<Property name="ERROR_FILE_NAME">error</Property>
+
+		<!-- 日志信息默认输出格式 -->
+		<Property name="PATTERN"
+			value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t-%L] %-5level %l{36} - %m%n" />
+	</Properties>
+
+	<Appenders>
+		<!-- 输出控制台配置 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- 日志信息输出格式，不设置默认为：%m%n -->
+			<!-- %d{yyyy-MM-dd HH:mm:ss.SSS} : 日志生产时间 -->
+			<!-- %-5level : 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0 -->
+			<!-- %c : logger的名称 -->
+			<!-- %t : 输出当前线程名称 -->
+			<!-- %p : 日志输出格式 -->
+			<!-- %m : 日志内容，即logger.info("message") -->
+			<!-- %n : 换行符 -->
+			<!-- %C : Java类名 -->
+			<!-- %L : 日志输出所在行数 -->
+			<!-- %M : 日志输出所在方法名 -->
+			<!-- %l : 输出语句所在的行数，包括类名、方法名、文件名、行数 -->
+			<!-- hostName : 本地机器名 -->
+			<!-- hostAddress : 本地ip地址 -->
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l{36} - %m%n" />
+		</Console>
+
+		<!-- 文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
+		<!-- append为TRUE表示消息增加到指定文件中，false表示消息覆盖指定的文件内容，默认值是true -->
+		<!-- <File name="log" fileName="${LOG_HOME}/test.log" append="false"> <PatternLayout 
+			pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l{36} - %m%n" /> </File> -->
+
+		<!-- 循环日志文件：日志文件大于阀值的时候，就开始写一个新的日志文件 -->
+		<!-- 这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<!-- fileName : 指定当前日志文件的位置和文件名称 -->
+		<!-- filePattern : 指定当发生Rolling时，文件的转移和重命名规则 -->
+		<!-- TimeBasedTriggeringPolicy指定的size是1，结合起来就是每1天生成一个新文件 -->
+		<RollingFile name="RollingFileInfo"
+			fileName="${LOG_HOME}/${FILE_NAME}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+
+			<!-- 过滤器 -->
+			<!-- 参考：https://blog.csdn.net/chenhaotong/article/details/50487557 -->
+			<!-- 控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="INFO" onMatch="ACCEPT"
+				onMismatch="DENY" />
+
+			<!-- 日志输出格式 -->
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l{36} - %m%n" />
+
+			<Policies>
+				<!-- 基于时间的滚动策略，interval属性用来指定多久滚动一次，默认是1 hour。 modulate=true用来调整时间：比如现在是早上3am，interval是4，那么第一次滚动是在4am，接着是8am、12am...而不是7am -->
+				<!-- 需要和filePattern结合使用，关键点在于filePattern后的日期格式，以及TimeBasedTriggeringPolicy的interval， 
+					日期格式精确到哪一位，interval也精确到哪一个单位 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- SizeBasedTriggeringPolicy : 基于指定文件大小的滚动策略，size属性用来定义每个日志文件的大小 -->
+				<SizeBasedTriggeringPolicy size="5MB" />
+			</Policies>
+
+			<!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+
+		<RollingFile name="RollingFileWarn"
+			fileName="${WARN_LOG_HOME}/${WARN_FILE_NAME}.log"
+			filePattern="${WARN_LOG_HOME}/$${date:yyyy-MM}/${WARN_FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+			<ThresholdFilter level="WARN" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l{36} - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+
+		<RollingFile name="RollingFileError"
+			fileName="${ERROR_LOG_HOME}/${ERROR_FILE_NAME}.log"
+			filePattern="${ERROR_LOG_HOME}/$${date:yyyy-MM}/${ERROR_FILE_NAME}-%d{yyyy-MM-dd-HH-mm}-%i.log.gz">
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l{36} - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="1MB" />
+			</Policies>
+		</RollingFile>
+
+	</Appenders>
+
+	<!-- 定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+	<Loggers>
+		<!--过滤掉spring和mybatis的一些无用的DEBUG信息 -->
+		<Logger name="org.springframework" level="INFO" />
+		<Logger name="org.mybatis" level="INFO" />
+
+		<!-- 同步：Root、Logger -->
+		<!-- 配置日志的根节点 -->
+		<Root level="ALL" includeLocation="true">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFileInfo" />
+			<AppenderRef ref="RollingFileWarn" />
+			<AppenderRef ref="RollingFileError" />
+		</Root>
+		<!-- logger中的name是指代码的包名或类名，路径要写全，可以配置不同包中的日志输出到不同的文件中 -->
+		<!-- level是日志输出级别，定义输出的层次和决定信息是否输出 -->
+		<!-- additivity设置事件是否在root logger输出，为了避免重复输出，可以在Logger标签下设置additivity为false -->
+		<!-- <Logger name="com.timor" level="INFO" additivity="true"> <AppenderRef 
+			ref="RollingFileInfo" /> <AppenderRef ref="RollingFileWarn" /> <AppenderRef 
+			ref="RollingFileError" /> </Logger> -->
+
+		<!-- 异步日志，需加上“includeLocation="true"”才会有类路径等一些信息打印出来 -->
+		<!-- 性能对比：完全异步 > 混合模式 > 只异步化Appender > 同步 -->
+		<!-- 参考：https://www.jb51.net/article/126336.htm -->
+		<!-- 参考：https://blog.csdn.net/qinxuefly/article/details/51907126 -->
+		<!-- <AsyncRoot level="info" includeLocation="true"> <AppenderRef ref="Console" 
+			/> </AsyncRoot> <AsyncLogger name="com.timor" level="INFO" additivity="true" 
+			includeLocation="true"> <AppenderRef ref="RollingFileInfo" /> </AsyncLogger> -->
+	</Loggers>
+
+</Configuration>

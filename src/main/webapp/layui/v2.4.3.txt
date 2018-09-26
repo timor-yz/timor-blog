@@ -1,0 +1,13 @@
+项目使用版本为：v2.4.3
+
+官方网站：https://www.layui.com/
+
+更新日志：https://www.layui.com/doc/base/changelog.html
+
+在线示例：https://www.layui.com/demo/
+
+快速上手（API）：https://www.layui.com/doc/
+
+GitHub：https://github.com/sentsin/layui/
+
+Git码云：https://gitee.com/sentsin/layui?from=layui

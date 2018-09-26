@@ -1,0 +1,25 @@
+### 邮件发送所需参数配置
+spring:
+  mail:
+    transport:
+      # 协议（例：smtp、pop3、imap）
+      protocol: smtp
+    # 服务器主机
+    host: smtp.126.com
+    smtp:
+      # 认证机制开关，记得开启
+      auth: true
+      # 服务器端口（不加密：25，加密：465、587）
+      port: 465
+      # 连接超时时间，单位毫秒
+      timeout: 5000
+    auth:
+      # 发件方账户
+      name: yuanzhe13579@126.com
+      # 密码/授权码。QQ邮箱的话此处设置16位授权码，不是邮箱密码，切记！
+      password: yuanzhe123
+    is:
+      # 是否发送加密邮件（当该值发生变化后，mail.smtp.port的值也需随之改变）
+      ssl: true
+    # 默认邮件编码（例：UTF-8、GBK、ISO8859-1，忽略大小写）
+    default-encoding: UTF-8

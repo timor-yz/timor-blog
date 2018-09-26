@@ -1,0 +1,22 @@
+### Redis配置信息
+### 参考：https://blog.csdn.net/saytime/article/details/80585373
+spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    # 连接超时时间（毫秒）
+    timeout: 10000
+    # jedis连接池配置
+    jedis:
+      pool:
+        # 最大连接数（使用负值标识没有限制）
+        max-active: 8
+        # 最大阻塞等待时间（毫秒）（使用负值标识没有限制）
+        max-wait: 1000
+        # 最大空闲连接数
+        max-idle: 5
+        # 最小空闲连接数
+        min-idle: 0
+      

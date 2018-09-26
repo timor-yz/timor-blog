@@ -1,0 +1,22 @@
+########## 生产环境 ##########
+
+spring:
+  ### 数据源
+  ### 该数据源配置并不影响Druid
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # useUnicode=true&characterEncoding=UTF-8 : 编码格式
+    # useUnicode : 是否使用Unicode字符集，如果参数characterEncoding设置为UTF-8或GBK，本参数值必须设置为true（省缺false）
+    # characterEncoding : 当useUnicode设置为true时，指定字符编码。比如可设置为UTF-8或GBK
+    # serverTimezone=GMT%2B8 : 设置时区为北京时区（东八区，“GMT”代表世界标准时间，“%2B”代表“+”）
+    url: jdbc:mysql://127.0.0.1:3306/timor_blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  # 静态资源的访问配置
+  # 参考：https://blog.csdn.net/plei_yue/article/details/79360645
+  #resources:
+  #  static-locations: 
+
+### log4j2
+logging:
+  config: classpath:config/prod/log4j2.xml

@@ -1,0 +1,25 @@
+########## 主配置文件
+########## 参考：https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+spring:
+  profiles:
+    active: dev
+  http:
+    # HTTP请求/响应字符编码设置
+    encoding:
+      enabled: true
+      charset: UTF-8
+  # jsp支持
+  # 参考：https://blog.csdn.net/sky274548769/article/details/78742831
+  mvc:
+    view:
+      prefix: /WEB-INF/page/
+      suffix: .jsp
+  # 关闭默认模板引擎
+  thymeleaf:
+    cache: false
+    enabled: false
+
+server:
+  # 端口号
+  port: 8888

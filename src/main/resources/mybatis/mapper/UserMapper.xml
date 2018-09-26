@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.timor.mapper.UserMapper" >
+    <sql id="columns" >
+        id, email, phone, nick_name, password, state, enable, img_url, create_time
+    </sql>
+ 
+    <select id="get" parameterType="com.timor.entity.User" resultType="com.timor.entity.User" >
+        select <include refid="columns" />
+          from user
+  		<trim prefix="where" prefixOverrides="and|or">
+  			<if test="id != null">and id = #{id}</if>
+  			<if test="email != null">and email = #{email}</if>
+  			<if test="phone != null">and phone = #{phone}</if>
+  			<if test="nickName != null">and nick_name = #{nickName}</if>
+  			<if test="password != null">and password = #{password}</if>
+  			<if test="state != null">and state = #{state}</if>
+  			<if test="enable != null">and enable = #{enable}</if>
+  			<if test="imgUrl != null">and img_url = #{imgUrl}</if>
+  			<if test="createTime != null">and create_time = #{createTime}</if>
+  		</trim>
+    </select>
+ 
+    <select id="getUserById" parameterType="java.lang.Integer" resultType="com.timor.entity.User" >
+        select <include refid="columns" />
+          from user
+         where id = #{id}
+    </select>
+ 
+    <insert id="add" parameterType="com.timor.entity.User" >
+        insert into user
+        (
+        	id, email, phone, nick_name, password, img_url, create_time
+        )
+        values
+        (
+        	#{id}, #{email}, #{phone}, #{nickName}, #{password}, #{imgUrl}, #{createTime}
+        )
+    </insert>
+ 
+    <update id="update" parameterType="com.timor.entity.User" >
+        update user
+        <trim prefix="set" suffixOverrides=",">
+  			<if test="email != null">email = #{email},</if>
+  			<if test="phone != null">phone = #{phone},</if>
+  			<if test="nickName != null">nick_name = #{nickName},</if>
+  			<if test="password != null">password = #{password},</if>
+  			<if test="state != null">state = #{state},</if>
+  			<if test="enable != null">enable = #{enable},</if>
+  			<if test="imgUrl != null">img_url = #{imgUrl},</if>
+  		</trim>
+         where id = #{id}
+    </update>
+ 
+    <update id="updateByEmail" parameterType="com.timor.entity.User" >
+        update user
+        <trim prefix="set" suffixOverrides=",">
+  			<if test="phone != null">phone = #{phone},</if>
+  			<if test="nickName != null">nick_name = #{nickName},</if>
+  			<if test="password != null">password = #{password},</if>
+  			<if test="state != null">state = #{state},</if>
+  			<if test="enable != null">enable = #{enable},</if>
+  			<if test="imgUrl != null">img_url = #{imgUrl},</if>
+  		</trim>
+         where email = #{email}
+    </update>
+ 
+    <delete id="deleteByEmail" parameterType="java.lang.String" >
+        delete from user where email = #{email}
+    </delete>
+</mapper>

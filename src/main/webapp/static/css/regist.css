@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+.regist-main {
+	width: 400px;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.regist-title {
+	font-size: 32px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.code-input {
+	width: calc(100% - 100px);
+	float: left;
+}
+
+.code-img-div {
+	float: right;
+}
+
+.code-img {
+	cursor: pointer;
+	width: 100px;
+	height: 38px;
+}
+
+.to-user-agreement {
+	position: relative;
+	left: -20px;
+	top: 6px;
+	cursor: pointer;
+}
+
+.to-user-agreement:hover {
+	color: #19aaf8;
+}
+
+.btn-regist {
+	width: 100%
+}
