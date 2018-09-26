@@ -1,0 +1,25 @@
+各工具类简要说明：
+	
+	DateFormatUtils				日期时间格式化
+
+	DateUtils					日期时间
+
+	EmailUtils					邮件发送
+	
+	FileUtils					文件处理
+	
+	JsonUtils					JSON处理
+	
+	MD5Utils					MD5处理
+	
+	NumberUtils					数字处理
+	
+	RandomUtils					随机数
+	
+	RandomStringUtils			随机字符串
+	
+	StringUtils					String
+	
+	SystemUtils					系统级调用
+	
+	......

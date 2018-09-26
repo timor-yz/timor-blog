@@ -23,6 +23,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<commons-io.version>2.6</commons-io.version>
 		<mybatis.version>1.3.2</mybatis.version>
 		<druid.version>1.1.10</druid.version>
 		<fastjson.version>1.2.49</fastjson.version>
@@ -68,6 +69,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<!-- IO -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
 		</dependency>
 
 		<!-- jdbcTemplate -->
