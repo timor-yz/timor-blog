@@ -1,3 +1,6 @@
+/**
+ * timor-yz所有
+ */
 package com.timor.yz.spring.boot.blog.utils;
 
 import com.sun.mail.util.MailSSLSocketFactory;
