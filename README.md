@@ -1,4 +1,4 @@
 # timor-blog
-基于SpringBoot开发的个人博客系统
+基于 SpringBoot + Shiro + MyBatis + Thymeleaf 开发的个人博客系统
 
-未完善
+开发中...
