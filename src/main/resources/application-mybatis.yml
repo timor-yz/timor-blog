@@ -1,7 +1,7 @@
 ### MyBatis
 mybatis:
   # 指向实体类的位置
-  type-aliases-package: com.timor.entity
+  type-aliases-package: com.timor.yz.blog.entity
   # 指向mapper的xml文件位置
   mapper-locations: classpath:mybatis/mapper/*.xml
   # MyBatis配置文件位置

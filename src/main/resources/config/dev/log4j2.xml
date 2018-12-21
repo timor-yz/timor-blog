@@ -20,12 +20,12 @@
 <Configuration status="OFF" monitorInterval="1800">
 	<Properties>
 		<!-- 日志文件输出目录 -->
-		<!-- <Property name="LOG_HOME" value="${sys:catalina.home}/logs" /> <Property 
+		<Property name="LOG_HOME" value="${sys:catalina.home}/logs" /> <Property 
 			name="WARN_LOG_HOME" value="${sys:catalina.home}/logs/warn" /> <Property 
-			name="ERROR_LOG_HOME" value="${sys:catalina.home}/logs/error" /> -->
-		<Property name="LOG_HOME" value="E:/logs" />
+			name="ERROR_LOG_HOME" value="${sys:catalina.home}/logs/error" />
+		<!-- <Property name="LOG_HOME" value="E:/logs" />
 		<Property name="WARN_LOG_HOME" value="E:/logs/warn" />
-		<Property name="ERROR_LOG_HOME" value="E:/logs/error" />
+		<Property name="ERROR_LOG_HOME" value="E:/logs/error" /> -->
 
 		<!-- 日志文件名称 -->
 		<Property name="FILE_NAME">info</Property>
@@ -133,7 +133,7 @@
 
 		<!-- 同步：Root、Logger -->
 		<!-- 配置日志的根节点 -->
-		<Root level="ALL" includeLocation="true">
+		<Root level="INFO" includeLocation="true">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFileInfo" />
 			<AppenderRef ref="RollingFileWarn" />

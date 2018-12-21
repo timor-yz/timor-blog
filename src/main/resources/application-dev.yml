@@ -14,10 +14,27 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/timor_blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username: root
     password: 123456
+    
   # 静态资源的访问配置
   # 参考：https://blog.csdn.net/plei_yue/article/details/79360645
   #resources:
   #  static-locations: 
+  
+  data:
+    # ElasticSearch
+    elasticsearch:
+      # ElasticSearch集群名称，省缺为“elasticsearch”
+      cluster-name: timor-elasticsearch
+      # 节点地址
+      cluster-nodes: 127.0.0.1:9300
+      properties:
+        path:
+        # 内嵌ElasticSearch实例。默认存储位置是工作目录的elastic目录
+          home: target/elastic
+        # 设置连接超时时间
+        transport:
+          tcp:
+            connect_timeout: 120s
 
 ### log4j2
 logging:

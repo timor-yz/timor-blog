@@ -9,17 +9,25 @@ spring:
     encoding:
       enabled: true
       charset: UTF-8
+      
   # jsp支持
   # 参考：https://blog.csdn.net/sky274548769/article/details/78742831
-  mvc:
-    view:
-      prefix: /WEB-INF/page/
-      suffix: .jsp
-  # 关闭默认模板引擎
+  # mvc:
+  #   view:
+  #     prefix: /WEB-INF/page/
+  #     suffix: .jsp
+  
+  # thymeleaf模板引擎
   thymeleaf:
+    encoding: UTF-8
     cache: false
-    enabled: false
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
 
 server:
   # 端口号
   port: 8888
+  # 项目名
+  # servlet:
+    # context-path: /timor-blog
