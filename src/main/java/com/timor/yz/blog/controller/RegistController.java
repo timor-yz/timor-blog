@@ -63,34 +63,30 @@ public class RegistController extends BaseController
 	 * @author YuanZhe
 	 * @date 2018年9月10日 下午5:38:28
 	 */
-	@RequestMapping("/regist")
+	@RequestMapping("/doRegist")
 	@ResponseBody
 	public String regist(Model model, @RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "password", required = false) String password,
-			@RequestParam(value = "phone", required = false) String phone,
-			@RequestParam(value = "nickName", required = false) String nickName,
 			@RequestParam(value = "code", required = false) String code)
 	{
 		logger.info("用户注册 regist/regist, email : {}, password : {}, phone : {}, nickName : {}, code : {}", email,
-				password, phone, nickName, code);
+				password,  code);
 
 		// 用户信息有效性校验
-		if (!valid(model, email, password, phone, nickName, code))
+		if (!valid(model, email, password, code))
 			return "../regist";
 
 		// 注册
 		User user = new User();
 		user.setId(RandomStringUtils.getUUID());
 		user.setEmail(email);
-		user.setPhone(phone);
-		user.setNickName(nickName);
-		user.setPassword(MD5Utils.encodeToHex(Constant.SALT + password));// 密码进行“加盐”存储
+		user.setPassword(MD5Utils.encodeToHex(password));// 密码进行“加盐”存储
 		user.setImgUrl("/static/imgs/icon_m.jpg");
 		userService.regist(user);
 		logger.info("注册成功");
 
 		// 生成邮件激活码，并保存到redis中
-		String activateCode = MD5Utils.encodeToHex(Constant.SALT + email + password);
+		String activateCode = MD5Utils.encodeToHex(email + password);
 		redisTemplate.opsForValue().set(email, activateCode, 24, TimeUnit.HOURS);// redis保存激活码（24小时有效激活）
 
 		// 发送激活邮件
@@ -120,18 +116,16 @@ public class RegistController extends BaseController
 	 * @param model    Model对象
 	 * @param email    用户邮箱地址
 	 * @param password 密码
-	 * @param phone    电话号码
-	 * @param nickname 昵称
 	 * @param code     验证码
 	 * @return 是否合法（true|false）
 	 * 
 	 * @author YuanZhe
 	 * @date 2018年9月11日 下午4:41:38
 	 */
-	private boolean valid(Model model, String email, String password, String phone, String nickName, String code)
+	private boolean valid(Model model, String email, String password, String code)
 	{
 		// 非空判断
-		if (StringUtils.isBlank(email) || StringUtils.isBlank(password) || StringUtils.isBlank(nickName)
+		if (StringUtils.isBlank(email) || StringUtils.isBlank(password)
 				|| StringUtils.isBlank(code) || StringUtils.isBlank(code))
 		{
 			model.addAttribute("error", "请求参数缺失，请重新注册！");
@@ -177,7 +171,7 @@ public class RegistController extends BaseController
 		String email = request.getParameter("email");
 		String activateCode = request.getParameter("activateCode");
 		logger.info("Email : {}、Code : {}", email, activateCode);
-		
+
 		if (StringUtils.isBlank(email) || StringUtils.isBlank(activateCode))
 		{
 			model.addAttribute("fail", "您的激活码错误，请重新激活！");
@@ -216,7 +210,6 @@ public class RegistController extends BaseController
 		// 用户激活
 		User userUpd = new User();
 		userUpd.setEmail(email);
-		userUpd.setEnable(1);
 		userUpd.setState(1);
 		userService.updateByEmail(userUpd);
 
@@ -267,37 +260,6 @@ public class RegistController extends BaseController
 		try
 		{
 			User user = userService.getByEmail(email);
-			result = user == null;
-		} catch (Exception e)
-		{
-			status = "500";
-			result = "系统繁忙，请稍后再试！";
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
-		}
-		return ResponseEntity.ok(new JsonResult(status, result));
-	}
-
-	/**
-	 * @Description 检测手机号是否已经被注册
-	 * @param model Model对象
-	 * @param phone 手机号
-	 * @return
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年9月12日 上午11:24:00
-	 */
-	@RequestMapping("/checkPhone")
-	@ResponseBody
-	public ResponseEntity<JsonResult> checkPhone(Model model,
-			@RequestParam(value = "phone", required = false) String phone)
-	{
-		logger.info("注册-检测手机号“{}”是否已被注册 regist/checkPhone", phone);
-		String status = "200";
-		Object result = null;
-		try
-		{
-			User user = userService.getByPhone(phone);
 			result = user == null;
 		} catch (Exception e)
 		{

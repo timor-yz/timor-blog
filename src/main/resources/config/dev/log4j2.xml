@@ -133,7 +133,7 @@
 
 		<!-- 同步：Root、Logger -->
 		<!-- 配置日志的根节点 -->
-		<Root level="INFO" includeLocation="true">
+		<Root level="DEBUG" includeLocation="true">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFileInfo" />
 			<AppenderRef ref="RollingFileWarn" />

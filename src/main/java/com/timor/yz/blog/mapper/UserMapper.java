@@ -18,6 +18,15 @@ import com.timor.yz.blog.entity.User;
 @Mapper
 public interface UserMapper
 {
+	/**
+	 * @Description 根据用户名查询用户信息
+	 * @param user 包含查询条件的User对象
+	 * @return 用户信息
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月21日 下午3:42:47
+	 */
+	User getByUsername(User user);
 
 	/**
 	 * @Description 根据指定条件查询用户信息
@@ -27,7 +36,7 @@ public interface UserMapper
 	 * @author YuanZhe
 	 * @date 2018年9月10日 下午2:23:30
 	 */
-	List<User> get(User user);
+	List<User> getByParams(User user);
 
 	/**
 	 * @Description 用户新增
@@ -37,7 +46,7 @@ public interface UserMapper
 	 * @author YuanZhe
 	 * @date 2018年9月10日 下午2:19:50
 	 */
-	int add(User user);
+	int insert(User user);
 
 	/**
 	 * @Description 根据id修改用户信息
@@ -65,6 +74,6 @@ public interface UserMapper
 	 * @date 2018年9月10日 下午5:51:24
 	 */
 	void deleteByEmail(String email);
-	
+
 	List<User> queryAll();
 }

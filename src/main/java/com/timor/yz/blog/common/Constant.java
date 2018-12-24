@@ -11,12 +11,6 @@ package com.timor.yz.blog.common;
  */
 public class Constant
 {
-
-	/**
-	 * @Fields SALT : 用于“加盐”操作
-	 */
-	public static final String SALT = "salt";
-
 	/**
 	 * @Fields VERCODE_KEY : 用于存储注册验证码的key
 	 */
@@ -26,5 +20,4 @@ public class Constant
 	 * @Fields LOGIN_VERCODE_KEY : 用于存储登录验证码的key
 	 */
 	public static final String VERCODE_KEY_LOGIN = "VERCODE_KEY_LOGIN";
-
 }

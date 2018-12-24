@@ -16,6 +16,16 @@ import com.timor.yz.blog.entity.User;
 public interface UserService
 {
 	/**
+	 * @Description 根据用户名查询用户信息
+	 * @param user 包含查询条件的User对象
+	 * @return 用户信息
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月21日 下午3:42:47
+	 */
+	User getByUsername(User user);
+
+	/**
 	 * @Description 用户注册
 	 * @param user 需注册的用户信息对象
 	 * @return 1：成功、0：失败、-1：邮箱已存在、-2：手机号已存在、-3：昵称已存在
@@ -56,16 +66,6 @@ public interface UserService
 	User getByEmail(String email);
 
 	/**
-	 * @Description 根据手机号获取用户信息
-	 * @param phone 手机号
-	 * @return 用户信息
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年9月10日 下午2:22:21
-	 */
-	User getByPhone(String phone);
-
-	/**
 	 * @Description 根据指定条件查询用户信息
 	 * @param user 包含查询条件的用户信息对象
 	 * @return 用户信息
@@ -101,6 +101,6 @@ public interface UserService
 	 * @date 2018年9月10日 下午5:51:24
 	 */
 	void deleteByEmail(String email);
-	
+
 	List<User> queryAll();
 }

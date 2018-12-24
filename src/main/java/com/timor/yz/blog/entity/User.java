@@ -18,12 +18,10 @@ public class User extends BaseBean
 	private static final long serialVersionUID = 1L;
 
 	private String id;// id
-	private String email;// 邮箱
-	private String phone;// 手机号
-	private String nickName;// 昵称
+	private String username;// 用户名
 	private String password;// 密码
-	private Integer state;// 状态（1：正常、0：未激活、-1：禁用）
-	private Integer enable;// 是否启用（1：是、0：否）
+	private String email;// 邮箱
+	private Integer state;// 状态（1：正常、0：未激活、-1：锁定）
 	private String imgUrl;// 头像URL
 	private Date createTime;// 创建（注册）时间
 
@@ -32,12 +30,10 @@ public class User extends BaseBean
 		StringBuilder str = new StringBuilder();
 		str.append("User { ");
 		str.append("id=").append(id);
-		str.append(", email=").append(email);
-		str.append(", phone=").append(phone);
-		str.append(", nickName=").append(nickName);
+		str.append(", username=").append(username);
 		str.append(", password=").append(password);
+		str.append(", email=").append(email);
 		str.append(", state=").append(state);
-		str.append(", enable=").append(enable);
 		str.append(", imgUrl=").append(imgUrl);
 		str.append(", createTime=").append(DateFormatUtils.getDateDefStr(createTime));
 		str.append(" }");
@@ -64,26 +60,6 @@ public class User extends BaseBean
 		this.email = email;
 	}
 
-	public String getPhone()
-	{
-		return phone;
-	}
-
-	public void setPhone(String phone)
-	{
-		this.phone = phone;
-	}
-
-	public String getNickName()
-	{
-		return nickName;
-	}
-
-	public void setNickName(String nickName)
-	{
-		this.nickName = nickName;
-	}
-
 	public String getPassword()
 	{
 		return password;
@@ -102,16 +78,6 @@ public class User extends BaseBean
 	public void setState(Integer state)
 	{
 		this.state = state;
-	}
-
-	public Integer getEnable()
-	{
-		return enable;
-	}
-
-	public void setEnable(Integer enable)
-	{
-		this.enable = enable;
 	}
 
 	public String getImgUrl()
