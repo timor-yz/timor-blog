@@ -50,14 +50,14 @@ public class User extends BaseBean
 		this.id = id;
 	}
 
-	public String getEmail()
+	public String getUsername()
 	{
-		return email;
+		return username;
 	}
 
-	public void setEmail(String email)
+	public void setUsername(String username)
 	{
-		this.email = email;
+		this.username = username;
 	}
 
 	public String getPassword()
@@ -68,6 +68,16 @@ public class User extends BaseBean
 	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+
+	public String getEmail()
+	{
+		return email;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
 	}
 
 	public Integer getState()

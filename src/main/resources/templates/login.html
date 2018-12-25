@@ -1,56 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head>
-<meta charset="UTF-8">
-<title>timor-yz博客系统 - 登录</title>
-<link rel="stylesheet" th:href="@{'~/layui/css/layui.css'}" />
-<script type="text/javascript" th:src="@{'~/layui/layui.js'}"></script>
-</head>
+<head th:replace="~{common/base-common :: common-head('timor-yz博客 - 登录', '', '')}" />
 <body>
 <div th:replace="~{common/header :: header}">...</div>
-<form class="layui-form" action="login">
-	<div class="layui-form-item">
-		<label class="layui-form-label">用户名</label>
-	    <div class="layui-input-block">
-	 		<input type="text" name="title" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" />
-	    </div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">密码</label>
-	    <div class="layui-input-block">
-	 		<input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" />
-	    </div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-	   		<button class="layui-btn" lay-submit lay-filter="login">登录</button>
-	    </div>
-	</div>
-	<table>
-		<tr>
-			<td>用户名</td>
-			<td><input type="text" /></td>
-		</tr>
-		<tr>
-			<td>密码</td>
-			<td><input type="password" /></td>
-		</tr>
-		<tr>
-			<td colspan="2"><input type="submit" value="登录" /></td>
-		</tr>
-	</table>
-</form>
+<div class="div-main">
+	<form class="layui-form" action="login">
+		<div class="layui-form-item">
+			<label class="layui-form-label">用户名</label>
+		    <div class="layui-input-block">
+		 		<input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" />
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">密码</label>
+		    <div class="layui-input-block">
+		 		<input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" />
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+		   		<button class="layui-btn" lay-submit lay-filter="login">登录</button>
+		    </div>
+		</div>
+	</form>
+</div>
 <div th:replace="~{common/footer :: footer}">...</div>
 
 <script type="text/javascript">
 layui.use([ 'form' ], function() {
 	var form = layui.form;
-	  
-	form.on('submit(login)', function(data) {
-		layer.msg(JSON.stringify(data.field));
-	    return false;
-	});
 });
 </script>
 </body>

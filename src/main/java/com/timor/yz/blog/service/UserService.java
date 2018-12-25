@@ -17,13 +17,13 @@ public interface UserService
 {
 	/**
 	 * @Description 根据用户名查询用户信息
-	 * @param user 包含查询条件的User对象
+	 * @param username 用户名
 	 * @return 用户信息
 	 * 
 	 * @author YuanZhe
 	 * @date 2018年12月21日 下午3:42:47
 	 */
-	User getByUsername(User user);
+	User getByUsername(String username);
 
 	/**
 	 * @Description 用户注册

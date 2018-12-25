@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<head th:fragment="common-head(title, cssUrls, jsUrls)">
+	<meta charset="UTF-8">
+	<title th:text="${title}">timor-yz博客系统</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{'/layui/css/layui.css'}" />
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/common.css'}" />
+    
+	<script type="text/javascript" th:src="@{'/js/jquery-3.3.1.min.js'}"></script>
+	<script type="text/javascript" th:src="@{'/layui/layui.js'}"></script>
+	<script type="text/javascript" th:src="@{'/js/common.js'}"></script>
+	
+	<!-- css传参;格式为：'css-url-01,css-url-02,...,css-url-n' -->
+	<link rel="stylesheet" type="text/css" th:each="cssUrl, status:${#strings.setSplit(cssUrls, ',')}" th:href="@{${cssUrl}}" />
+	
+	<!-- js传参;格式为：'js-url-01,js-url-02,...,js-url-n' -->
+	<script type="text/javascript" th:each="jsUrl, status:${#strings.setSplit(jsUrls, ',')}" th:src="@{${jsUrl}}"></script>
 </head>
 <body>
-
 </body>
 </html>

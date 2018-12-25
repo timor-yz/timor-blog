@@ -22,12 +22,6 @@
          where id = #{id}
     </select>
  
-    <select id="getByUsername" parameterType="com.timor.yz.blog.entity.User" resultType="com.timor.yz.blog.entity.User" >
-        select <include refid="columns" />
-          from user
-         where username = #{username}
-    </select>
- 
     <insert id="insert" parameterType="com.timor.yz.blog.entity.User" >
         insert into user
         (

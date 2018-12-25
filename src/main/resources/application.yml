@@ -24,6 +24,11 @@ spring:
     mode: HTML5
     prefix: classpath:/templates/
     suffix: .html
+  
+  # 静态资源的访问配置
+  # 参考：https://blog.csdn.net/plei_yue/article/details/79360645
+  resources:
+    static-locations: classpath:/static/
 
 server:
   # 端口号

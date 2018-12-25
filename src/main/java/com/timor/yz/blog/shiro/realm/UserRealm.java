@@ -83,9 +83,7 @@ public class UserRealm extends AuthorizingRealm
 
 		logger.info("------> 登录用户名 : {}", username);
 
-		User user = new User();
-		user.setEmail(upToken.getUsername());
-		user = userService.getByUsername(user);
+		User user = userService.getByUsername(upToken.getUsername());
 
 		if (user == null)
 			throw new UnknownAccountException("账号或密码错误!");// 没找到帐号

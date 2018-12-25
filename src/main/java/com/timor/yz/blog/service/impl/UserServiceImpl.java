@@ -25,9 +25,12 @@ public class UserServiceImpl implements UserService
 	@Autowired
 	private UserMapper userMapper;
 
-	public User getByUsername(User user)
+	public User getByUsername(String username)
 	{
-		return userMapper.getByUsername(user);
+		User user = new User();
+		user.setUsername(username);
+		List<User> users = userMapper.getByParams(user);
+		return users != null && users.size() == 1 ? users.get(0) : null;
 	}
 
 	@Transactional
@@ -58,12 +61,10 @@ public class UserServiceImpl implements UserService
 		return list != null && list.size() > 0 ? list.get(0) : null;
 	}
 
-
 	public List<User> findByParams(User user)
 	{
 		return userMapper.getByParams(user);
 	}
-
 
 	@Transactional
 	public void update(User user)

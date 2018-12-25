@@ -19,16 +19,6 @@ import com.timor.yz.blog.entity.User;
 public interface UserMapper
 {
 	/**
-	 * @Description 根据用户名查询用户信息
-	 * @param user 包含查询条件的User对象
-	 * @return 用户信息
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年12月21日 下午3:42:47
-	 */
-	User getByUsername(User user);
-
-	/**
 	 * @Description 根据指定条件查询用户信息
 	 * @param user 包含查询条件的用户信息对象
 	 * @return 用户信息

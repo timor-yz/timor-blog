@@ -14,11 +14,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/timor_blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username: root
     password: 123456
-    
-  # 静态资源的访问配置
-  # 参考：https://blog.csdn.net/plei_yue/article/details/79360645
-  #resources:
-  #  static-locations: 
   
   data:
     # ElasticSearch

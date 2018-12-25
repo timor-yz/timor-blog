@@ -61,4 +61,10 @@ public class MyCredentialsMatcher extends SimpleCredentialsMatcher
 
 		return res;
 	}
+	
+	public static void main(String[] args)
+	{
+		SimpleHash pwdHash = new SimpleHash(HASH_ALGORITHM_NAME, "///13579zse", "admin", HASH_ITERATIONS);
+		System.out.println(pwdHash.toString());
+	}
 }
