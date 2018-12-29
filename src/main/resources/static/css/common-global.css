@@ -1,0 +1,10 @@
+/* 全局公共css. Added By YuanZhe. 2018年12月24日 16:53:23 */
+@charset "UTF-8";
+
+.clear {
+	clear: both;
+}
+
+.txt-color-red {
+	color: red;
+}

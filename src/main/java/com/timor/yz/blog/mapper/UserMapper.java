@@ -64,6 +64,4 @@ public interface UserMapper
 	 * @date 2018年9月10日 下午5:51:24
 	 */
 	void deleteByEmail(String email);
-
-	List<User> queryAll();
 }

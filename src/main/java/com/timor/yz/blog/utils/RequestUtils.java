@@ -1,7 +1,7 @@
 /**
  * timor-yz所有
  */
-package com.timor.yz.blog.controller;
+package com.timor.yz.blog.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,18 +10,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.timor.yz.blog.common.Constant;
-
-public class BaseController
+/**
+ * @Description 请求对象获取工具类
+ * @author YuanZhe
+ * @date 2018年12月28日 上午10:50:08
+ * 
+ */
+public class RequestUtils
 {
 	/**
 	 * @Description 获取ServletRequestAttributes对象
 	 * @return ServletRequestAttributes对象
 	 * 
 	 * @author YuanZhe
-	 * @date 2018年9月11日 下午5:49:21
+	 * @date 2018年12月28日 上午10:50:08
 	 */
-	public ServletRequestAttributes getAttributes()
+	public static ServletRequestAttributes getAttributes()
 	{
 		return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 	}
@@ -31,9 +35,9 @@ public class BaseController
 	 * @return HttpServletRequest对象
 	 * 
 	 * @author YuanZhe
-	 * @date 2018年9月11日 下午5:49:05
+	 * @date 2018年12月28日 上午10:50:08
 	 */
-	public HttpServletRequest getRequest()
+	public static HttpServletRequest getRequest()
 	{
 		return getAttributes().getRequest();
 	}
@@ -43,9 +47,9 @@ public class BaseController
 	 * @return HttpServletResponse对象
 	 * 
 	 * @author YuanZhe
-	 * @date 2018年9月11日 下午5:48:48
+	 * @date 2018年12月28日 上午10:50:08
 	 */
-	public HttpServletResponse getResponse()
+	public static HttpServletResponse getResponse()
 	{
 		return getAttributes().getResponse();
 	}
@@ -55,30 +59,10 @@ public class BaseController
 	 * @return HttpSession对象
 	 * 
 	 * @author YuanZhe
-	 * @date 2018年9月11日 下午5:48:24
+	 * @date 2018年12月28日 上午10:50:08
 	 */
-	public HttpSession getSession()
+	public static HttpSession getSession()
 	{
 		return getRequest().getSession();
-	}
-
-	/**
-	 * @Description 检测验证码的有效性
-	 * @param code 需检测的验证码
-	 * @param type 操作类型（1：注册、2：登录）
-	 * @return 1：正确、0：错误、-1：失效
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年9月11日 下午4:26:39
-	 */
-	public int checkValidateCode(String code, int type)
-	{
-		String key = type == 1 ? Constant.VERCODE_KEY_REGIST : Constant.VERCODE_KEY_LOGIN;
-		Object vercode = getSession().getAttribute(key);
-		if (null == vercode)
-			return -1;
-		if (!code.equalsIgnoreCase(vercode.toString()))
-			return 0;
-		return 1;
 	}
 }

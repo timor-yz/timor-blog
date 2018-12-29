@@ -21,6 +21,7 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import com.timor.yz.blog.common.enums.EnumUserState;
 import com.timor.yz.blog.entity.User;
@@ -36,6 +37,7 @@ public class UserRealm extends AuthorizingRealm
 {
 	private static final Logger logger = LoggerFactory.getLogger(UserRealm.class);
 
+	@Lazy// 延迟加载，防止UserService未被AOP代理，导致其事务失效；参考：https://blog.csdn.net/finalcola/article/details/81197584
 	@Autowired
 	private UserService userService;
 

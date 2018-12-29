@@ -5,17 +5,24 @@
 	<title th:text="${title}">timor-yz博客系统</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{'/layui/css/layui.css'}" />
-    <link rel="stylesheet" type="text/css" th:href="@{'/css/common.css'}" />
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/common-global.css'}" />
     
 	<script type="text/javascript" th:src="@{'/js/jquery-3.3.1.min.js'}"></script>
 	<script type="text/javascript" th:src="@{'/layui/layui.js'}"></script>
-	<script type="text/javascript" th:src="@{'/js/common.js'}"></script>
+	<script type="text/javascript">
+		var ctxPath = '[[@{/}]]';// 获取项目绝对路径
+	</script>
+	<script type="text/javascript" th:src="@{'/js/common/common.js'}"></script>
+	<script type="text/javascript" th:src="@{'/js/common/common-constant.js'}"></script>
+	<script type="text/javascript" th:src="@{'/js/common/common-process.js'}"></script>
 	
-	<!-- css传参;格式为：'css-url-01,css-url-02,...,css-url-n' -->
-	<link rel="stylesheet" type="text/css" th:each="cssUrl, status:${#strings.setSplit(cssUrls, ',')}" th:href="@{${cssUrl}}" />
+	<!-- css传参;格式为：'css-url-01;css-url-02;...;css-url-n'. Start. -->
+	<link rel="stylesheet" type="text/css" th:each="cssUrl, status:${#strings.setSplit(cssUrls, ';')}" th:href="@{${cssUrl}}" />
+	<!-- css传参. End. -->
 	
-	<!-- js传参;格式为：'js-url-01,js-url-02,...,js-url-n' -->
-	<script type="text/javascript" th:each="jsUrl, status:${#strings.setSplit(jsUrls, ',')}" th:src="@{${jsUrl}}"></script>
+	<!-- js传参;格式为：'js-url-01;js-url-02;...;js-url-n'. Start. -->
+	<script type="text/javascript" th:each="jsUrl, status:${#strings.setSplit(jsUrls, ';')}" th:src="@{${jsUrl}}"></script>
+	<!-- js传参. End. -->
 </head>
 <body>
 </body>

@@ -1,7 +1,7 @@
 /**
  * timor-yz所有
  */
-package com.timor.yz.blog.common;
+package com.timor.yz.blog.common.validcode;
 
 import java.awt.Color;
 import java.awt.Font;

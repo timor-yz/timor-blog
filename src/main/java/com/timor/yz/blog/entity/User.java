@@ -23,7 +23,11 @@ public class User extends BaseBean
 	private String email;// 邮箱
 	private Integer state;// 状态（1：正常、0：未激活、-1：锁定）
 	private String imgUrl;// 头像URL
+	private String roleCode;// 所属角色Code role_code
 	private Date createTime;// 创建（注册）时间
+
+	// 临时变量
+	private String validCode;// 验证码
 
 	public String toString()
 	{
@@ -35,9 +39,31 @@ public class User extends BaseBean
 		str.append(", email=").append(email);
 		str.append(", state=").append(state);
 		str.append(", imgUrl=").append(imgUrl);
+		str.append(", roleCode=").append(roleCode);
 		str.append(", createTime=").append(DateFormatUtils.getDateDefStr(createTime));
+		str.append(", validCode=").append(validCode);
 		str.append(" }");
 		return str.toString();
+	}
+
+	public String getValidCode()
+	{
+		return validCode;
+	}
+
+	public void setValidCode(String validCode)
+	{
+		this.validCode = validCode;
+	}
+
+	public String getRoleCode()
+	{
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode)
+	{
+		this.roleCode = roleCode;
 	}
 
 	public String getId()

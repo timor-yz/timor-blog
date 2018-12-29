@@ -51,12 +51,12 @@ public class RandomStringUtils extends org.apache.commons.lang3.RandomStringUtil
 	 */
 	public static String getUUID()
 	{
-		return getUUID(20);
+		return getUUID(32);
 	}
 
 	public static void main(String[] args)
 	{
-		String str = random(20, true, true);
+		String str = random(32, true, true);
 		System.out.println(str);
 		System.out.println(str.toUpperCase());
 	}

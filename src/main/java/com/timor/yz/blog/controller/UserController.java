@@ -25,7 +25,7 @@ import com.timor.yz.blog.service.UserService;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController
+public class UserController
 {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -37,7 +37,7 @@ public class UserController extends BaseController
 	public ModelAndView list(Model model)
 	{
 		logger.info("查询所有用户信息");
-		List<User> users = userService.queryAll();
+		List<User> users = null;// TODO
 		model.addAttribute("users", users);
 		return new ModelAndView("user/list", "model", model);
 	}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="~{common/base-common :: common-head('timor-yz博客', '', '')}" />
+<body>
+	<span th:text="${msg}">注册成功！请及时前往激活！即将跳转至首页！</span>
+<script type="text/javascript">
+layui.use([ 'layer' ], function() {
+	var layer = layui.layer;
+	layer.msg('Registered successfully!');
+});
+</script>
+</body>
+</html>

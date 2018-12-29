@@ -15,10 +15,12 @@ public enum EnumUserState
 	 * @Fields NORMAL : 正常
 	 */
 	NORMAL(1, "正常"),
+
 	/**
 	 * @Fields INACTIVE : 待激活
 	 */
 	INACTIVE(0, "待激活"),
+
 	/**
 	 * @Fields LOCK : 锁定
 	 */

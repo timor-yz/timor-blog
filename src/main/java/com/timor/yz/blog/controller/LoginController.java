@@ -10,7 +10,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,34 +23,33 @@ import com.timor.yz.blog.utils.StringUtils;
  * 
  */
 @Controller
-public class LoginController extends BaseController
+public class LoginController
 {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	/**
 	 * @Description 用户登录
-	 * @param model Model对象
-	 * @param user  登录用户信息对象
+	 * @param user 登录用户信息对象
 	 * @return ModelAndView对象
 	 * 
 	 * @author YuanZhe
 	 * @date 2018年12月25日 上午9:30:52
 	 */
 	@RequestMapping("login")
-	public ModelAndView login(Model model, User user)
+	public ModelAndView login(User user)
 	{
-		logger.info("用户登录...login");
+		logger.info("用户登录...login! user : {}", user == null ? null : user.toString());
 
 		Subject subject = SecurityUtils.getSubject();
 		if (subject.isAuthenticated())
 		{
-			logger.info("当前用户已登录，前往首页");
+			logger.info("当前用户已登录，前往首页！");
 			return new ModelAndView("redirect:/web/index");// 已登录，前往首页
 		}
 
 		if (user == null || StringUtils.isBlank(user.getUsername()) || StringUtils.isBlank(user.getPassword()))
 		{
-			logger.info("登录请求信息为空");
+			logger.info("---> 登录请求信息为空！");
 			return new ModelAndView("redirect:/tologin");// 登录请求信息为空，前往登录页面
 		}
 
@@ -80,7 +78,7 @@ public class LoginController extends BaseController
 		logger.info("跳转登录页面...tologin");
 		if (SecurityUtils.getSubject().isAuthenticated())
 		{
-			logger.info("当前用户已登录，前往首页");
+			logger.info("当前用户已登录，前往首页！");
 			return new ModelAndView("redirect:/web/index");// 已登录，前往首页
 		}
 		return new ModelAndView("login");

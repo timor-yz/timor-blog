@@ -30,7 +30,18 @@ spring:
         transport:
           tcp:
             connect_timeout: 120s
+  # 这个开发时配置为false，避免改了模板还要重启服务器
+  thymeleaf:
+    cache: false
 
 ### log4j2
 logging:
   config: classpath:config/dev/log4j2.xml
+  
+### 常量
+constant:
+  project_url_prefix: http://localhost:8090/timor-blog/ # 项目网址前缀
+  admin_email: yuanzhe13579@163.com # 系统管理员邮箱
+  user_default: # 用户默认信息
+    avatar_img_url: /imgs/icon_m.jpg  # 默认头像URL
+    role_code: normal_user # 默认角色Code

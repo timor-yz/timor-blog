@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head th:replace="~{common/base-common :: common-head('timor-yz博客 - 登录', '', '')}" />
+<head th:replace="~{common/base-common :: common-head('timor-yz博客 - 登录', '/css/login.css', '')}" />
 <body>
 <div th:replace="~{common/header :: header}">...</div>
 <div class="div-main">
-	<form class="layui-form" action="login">
+	<form class="layui-form" action="login" method="post">
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户名</label>
 		    <div class="layui-input-block">
-		 		<input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" />
+		 		<input type="text" name="username" required  lay-verify="username" placeholder="请输入用户名" autocomplete="off" class="layui-input" />
 		    </div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">密码</label>
 		    <div class="layui-input-block">
-		 		<input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" />
+		 		<input type="password" name="password" required lay-verify="password" placeholder="请输入密码" autocomplete="off" class="layui-input" />
 		    </div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 		   		<button class="layui-btn" lay-submit lay-filter="login">登录</button>
+    			<a th:href="@{'/regist/toregist'}">还没有账号？前往注册</a>
 		    </div>
 		</div>
 	</form>
 </div>
 <div th:replace="~{common/footer :: footer}">...</div>
 
-<script type="text/javascript">
-layui.use([ 'form' ], function() {
-	var form = layui.form;
-});
-</script>
+<script type="text/javascript" th:src="@{'/js/login.js'}"></script>
 </body>
 </html>

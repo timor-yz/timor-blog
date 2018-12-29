@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="~{common/base-common :: common-head('timor-yz博客', '', '')}" />
+<body>
+	<span th:text="${msg}">注册失败！请重新注册！</span>
+<script type="text/javascript">
+layui.use([ 'layer' ], function() {
+	var layer = layui.layer;
+});
+</script>
+</body>
+</html>

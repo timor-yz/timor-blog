@@ -8,9 +8,15 @@
 <body>
 <div class="common-header" data-th-fragment="header">
     <h1>头部页面</h1>
-    <a th:href="@{'/index.html'}">主页</a>
-    <a th:href="@{'/login.html'}">登录</a>
-    <a th:href="@{'/login.html'}">注册</a>
+    <a th:href="@{'/web/index'}">主页</a>
+    <shiro:notAuthenticated>
+    	<a th:href="@{'/tologin'}">登录</a>
+    	<a th:href="@{'/regist/toregist'}">注册</a>
+    </shiro:notAuthenticated>
+    <shiro:authenticated>
+    	<shiro:principal property="username"/>
+    	<a th:href="@{'/logout'}">登出</a>
+    </shiro:authenticated>
 </div>
 </body>
 </html>

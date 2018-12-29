@@ -1,7 +1,7 @@
 /**
  * timor-yz所有
  */
-package com.timor.yz.blog.common;
+package com.timor.yz.blog.common.validcode;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.timor.yz.blog.common.constant.Constant;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

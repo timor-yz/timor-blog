@@ -79,27 +79,69 @@ public class EmailUtils
 	 */
 	private static String timeout;
 
+	/**
+	 * @Description 初始化发送邮件所需参数
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月26日 下午5:05:19
+	 */
 	@PostConstruct
 	public void initParam()
 	{
 		logger.info("-------------------- Init the params for send mail. Start --------------------");
-		auth = env.getProperty("spring.mail.smtp.auth");
-		host = env.getProperty("spring.mail.host");
-		protocol = env.getProperty("spring.mail.transport.protocol");
-		port = env.getProperty("spring.mail.smtp.port", Integer.class);
-		username = env.getProperty("spring.mail.auth.name");
-		password = env.getProperty("spring.mail.auth.password");
-		defaultEncoding = env.getProperty("spring.mail.default-encoding");
-		isSSL = env.getProperty("spring.mail.is.ssl", Boolean.class);
-		timeout = env.getProperty("spring.mail.smtp.timeout");
-		logger.info(
-				"Send Email Params : { auth : {}, host : {}, protocol : {}, port : {}, username : {}, password : {}, defaultEncoding : {}, isSSL : {}, timeout : {} }",
-				auth, host, protocol, port, username, password, defaultEncoding, isSSL, timeout);
+		try
+		{
+			auth = env.getProperty("spring.mail.smtp.auth");
+			host = env.getProperty("spring.mail.host");
+			protocol = env.getProperty("spring.mail.transport.protocol");
+			port = env.getProperty("spring.mail.smtp.port", Integer.class);
+			username = env.getProperty("spring.mail.auth.name");
+			password = env.getProperty("spring.mail.auth.password");
+			defaultEncoding = env.getProperty("spring.mail.default-encoding");
+			isSSL = env.getProperty("spring.mail.is.ssl", Boolean.class);
+			timeout = env.getProperty("spring.mail.smtp.timeout");
+			logger.info(
+					"Send Email Params : { auth : {}, host : {}, protocol : {}, port : {}, username : {}, password : {}, defaultEncoding : {}, isSSL : {}, timeout : {} }",
+					auth, host, protocol, port, username, password, defaultEncoding, isSSL, timeout);
+		} catch (Exception e)
+		{
+			logger.error("---> Failed to init the params for send mail.", e);
+		}
 		logger.info("-------------------- Init the params for send mail. End --------------------");
 	}
 
 	/**
-	 * @Description 发送邮件
+	 * @Description 发送邮件（发送给单个人，无抄送人，无附件）（该方法会自己消化异常；可根据返回值来进行是否发送成功判断）
+	 * @param user    收件人邮箱地址
+	 * @param subject 主题/标题
+	 * @param content 邮件内容
+	 * @return
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月26日 下午3:12:19
+	 */
+	public static boolean sendEmail(String user, String subject, String content)
+	{
+		return sendEmail(new String[] { user }, null, subject, content, null);
+	}
+
+	/**
+	 * @Description 发送邮件（群发，无抄送人，无附件）（该方法会自己消化异常；可根据返回值来进行是否发送成功判断）
+	 * @param toUsers 收件人邮箱地址数组
+	 * @param subject 主题/标题
+	 * @param content 邮件内容
+	 * @return
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月26日 下午3:12:19
+	 */
+	public static boolean sendEmail(String[] toUsers, String subject, String content)
+	{
+		return sendEmail(toUsers, null, subject, content, null);
+	}
+
+	/**
+	 * @Description 发送邮件（该方法会自己消化异常；可根据返回值来进行是否发送成功判断）
 	 * @param toUsers     收件人邮箱地址
 	 * @param ccUsers     抄送人邮箱地址
 	 * @param subject     主题/标题
@@ -143,7 +185,7 @@ public class EmailUtils
 				{
 					sf = new MailSSLSocketFactory();
 					sf.setTrustAllHosts(true);
-					props.put("mail.smtp.ssl.enable", "true");
+					props.put("mail.smtp.ssl.enable", true);
 					props.put("mail.smtp.ssl.socketFactory", sf);
 					logger.info("Encrypted Email Success!");
 				} catch (GeneralSecurityException e)
@@ -177,7 +219,7 @@ public class EmailUtils
 			// 发送邮件
 			javaMailSender.send(mailMsg);
 			flag = true;
-			logger.info("Send Email Success!");
+			logger.info("Send Email Successful!");
 		} catch (Exception e)
 		{
 			logger.error("Send Email Fail!", e);

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.timor.yz.blog.mapper.UserMapper" >
     <sql id="columns" >
-        id, username, password, email, state, img_url, create_time
+        id, username, password, email, state, img_url, role_code, create_time
     </sql>
  
     <select id="getByParams" parameterType="com.timor.yz.blog.entity.User" resultType="com.timor.yz.blog.entity.User" >
@@ -13,23 +13,18 @@
   			<if test="username != null">and username = #{username}</if>
   			<if test="email != null">and email = #{email}</if>
   			<if test="state != null">and state = #{state}</if>
+  			<if test="roleCode != null">and role_code = #{roleCode}</if>
   		</trim>
     </select>
     
-    <select id="getUserById" parameterType="java.lang.Integer" resultType="com.timor.yz.blog.entity.User" >
-        select <include refid="columns" />
-          from user
-         where id = #{id}
-    </select>
- 
     <insert id="insert" parameterType="com.timor.yz.blog.entity.User" >
         insert into user
         (
-        	id, username, password, email, img_url, create_time
+        	id, username, password, email, state, img_url, role_code, create_time
         )
         values
         (
-        	#{id}, #{username}, #{password}, #{email}, #{imgUrl}, now()
+        	#{id}, #{username}, #{password}, #{email}, #{state}, #{imgUrl}, #{roleCode}, now()
         )
     </insert>
  
@@ -40,6 +35,7 @@
   			<if test="password != null">password = #{password},</if>
   			<if test="state != null">state = #{state},</if>
   			<if test="imgUrl != null">img_url = #{imgUrl},</if>
+  			<if test="roleCode != null">role_code = #{roleCode},</if>
   		</trim>
          where id = #{id}
     </update>
@@ -47,9 +43,7 @@
     <update id="updateByEmail" parameterType="com.timor.yz.blog.entity.User" >
         update user
         <trim prefix="set" suffixOverrides=",">
-  			<if test="password != null">password = #{password},</if>
   			<if test="state != null">state = #{state},</if>
-  			<if test="imgUrl != null">img_url = #{imgUrl},</if>
   		</trim>
          where email = #{email}
     </update>
@@ -57,9 +51,4 @@
     <delete id="deleteByEmail" parameterType="java.lang.String" >
         delete from user where email = #{email}
     </delete>
- 
-    <select id="queryAll" resultType="com.timor.yz.blog.entity.User" >
-        select <include refid="columns" />
-          from user
-    </select>
 </mapper>

@@ -1,7 +1,7 @@
 /**
  * timor-yz所有
  */
-package com.timor.yz.blog.common;
+package com.timor.yz.blog.common.constant;
 
 /**
  * @Description 常量类

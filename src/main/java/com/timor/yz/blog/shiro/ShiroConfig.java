@@ -3,9 +3,6 @@
  */
 package com.timor.yz.blog.shiro;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -65,12 +62,12 @@ public class ShiroConfig
 		bean.setSecurityManager(securityManager);
 
 		// 配置前往登录的url、登录成功后需跳转的url、登录后无权限需跳转的url
-		bean.setLoginUrl("/login");
+		bean.setLoginUrl("/web/index");
 		bean.setSuccessUrl("/web/index");
 		bean.setUnauthorizedUrl("/unauthorized");
 
 		// 配置访问权限（anon：可匿名访问、authc：需认证（登录）后才可访问）
-		bean.setFilterChainDefinitionMap(this.getFilterChainDefinitionMap());
+		bean.setFilterChainDefinitionMap(MyFilterChainDefinition.getFilterChainDefinitionMap());
 
 		return bean;
 	}
@@ -143,38 +140,4 @@ public class ShiroConfig
 		return advisor;
 	}
 
-	/**
-	 * @Description 获取访问权限配置（anon：可匿名访问、authc：需认证（登录）后才可访问）
-	 * @return 访问权限配置Map
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年12月24日 下午3:04:08
-	 */
-	private Map<String, String> getFilterChainDefinitionMap()
-	{
-		Map<String, String> map = new LinkedHashMap<>();
-
-		// 静态资源
-		map.put("/js/**", "anon");
-		map.put("/css/**", "anon");
-		map.put("/imgs/**", "anon");
-		map.put("/layui/**", "anon");
-		map.put("/common/**", "anon");
-
-		// 注册/登录相关
-		map.put("/regist", "anon");
-		map.put("/tologin", "anon");
-		map.put("/login", "anon");
-
-		// 首页
-		map.put("/web/index", "anon");
-		
-		// 无权限页面
-		map.put("/unauthorized", "anon");
-
-		// 需认证
-		map.put("/**", "authc");
-
-		return map;
-	}
 }

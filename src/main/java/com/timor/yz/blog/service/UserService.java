@@ -15,35 +15,6 @@ import com.timor.yz.blog.entity.User;
  */
 public interface UserService
 {
-	/**
-	 * @Description 根据用户名查询用户信息
-	 * @param username 用户名
-	 * @return 用户信息
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年12月21日 下午3:42:47
-	 */
-	User getByUsername(String username);
-
-	/**
-	 * @Description 用户注册
-	 * @param user 需注册的用户信息对象
-	 * @return 1：成功、0：失败、-1：邮箱已存在、-2：手机号已存在、-3：昵称已存在
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年9月10日 下午2:19:50
-	 */
-	int regist(User user);
-
-	/**
-	 * @Description 用户登录
-	 * @param user 需登录的用户信息对象
-	 * @return 登录用户信息
-	 * 
-	 * @author YuanZhe
-	 * @date 2018年9月10日 下午2:20:33
-	 */
-	User login(User user);
 
 	/**
 	 * @Description 根据id获取用户信息
@@ -54,6 +25,16 @@ public interface UserService
 	 * @date 2018年9月10日 下午2:22:21
 	 */
 	User getById(String id);
+
+	/**
+	 * @Description 根据用户名查询用户信息
+	 * @param username 用户名
+	 * @return 用户信息
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月21日 下午3:42:47
+	 */
+	User getByUsername(String username);
 
 	/**
 	 * @Description 根据email获取用户信息
@@ -74,6 +55,26 @@ public interface UserService
 	 * @date 2018年9月10日 下午2:23:30
 	 */
 	List<User> findByParams(User user);
+
+	/**
+	 * @Description 用户注册，并发送激活邮件
+	 * @param user 需注册的用户信息对象
+	 * @throws Exception 抛出异常
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年12月26日 下午5:55:56
+	 */
+	void regist(User user) throws Exception;
+
+	/**
+	 * @Description 用户登录
+	 * @param user 需登录的用户信息对象
+	 * @return 登录用户信息
+	 * 
+	 * @author YuanZhe
+	 * @date 2018年9月10日 下午2:20:33
+	 */
+	User login(User user);
 
 	/**
 	 * @Description 修改用户信息
@@ -102,5 +103,4 @@ public interface UserService
 	 */
 	void deleteByEmail(String email);
 
-	List<User> queryAll();
 }

@@ -1,3 +1,4 @@
+/* 用户注册页面渲染css. Added By YuanZhe. 2018年12月27日 09:31:14 */
 @charset "UTF-8";
 
 .regist-main {
@@ -25,19 +26,4 @@
 	cursor: pointer;
 	width: 100px;
 	height: 38px;
-}
-
-.to-user-agreement {
-	position: relative;
-	left: -20px;
-	top: 6px;
-	cursor: pointer;
-}
-
-.to-user-agreement:hover {
-	color: #19aaf8;
-}
-
-.btn-regist {
-	width: 100%
 }

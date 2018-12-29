@@ -1,132 +1,94 @@
-var userAgreement;
-layui.use([ 'layer', 'form' ], function() {
-	var $ = layui.$,
-		layer = layui.layer,
-		form = layui.form;
-	
-	// 展示用户协议
-	$('#to-user-agreement').click(function() {
-		layer.open({
-			type : 2,
-			area: ['1100px', '600px'],
-			title: '<p align="center">Timor网用户协议</p>',
-			content : '/page/UserAgreement.html', //这里content是一个普通的String
-			resize : false, // 不允许拉伸
-			btn: ['已阅读并同意', '关闭'],
-			btnAlign : 'c',
-			yes : function(index, layero) {
-				$('#protocol').prop('checked', true);
-				form.render('checkbox');
-				layer.close(index);
-			},
-			btn2 : function() {
-				
-			}
-		});
-	});
+/* 用户注册处理js. Added By YuanZhe. 2018年12月27日 09:32:43 */
+
+var form, layer;
+
+layui.use([ 'form', 'layer' ], function() {
+	form = layui.form;
+	layer = layui.layer;
 	
 	// 自定义验证规则
 	form.verify({
-		email : function(value, item) {
-			if (!isEmail(value)) {
-				return '邮箱格式不正确';
+		username : function(val, item) {
+			if (isEmpty(val)) {
+				return '请输入用户名';
 			}
-			var flag = true;// 邮箱是否已被注册
+			if ($.trim(val).length < 5) {
+				return '用户名长度不能低于5位';
+			}
+			var flag = true;
+			var msg = '';
 			$.ajax({
-                type : 'post',
-                url : '/regist/checkEmail',
-                data : { email : value},
-                dataType : 'json',
+                type : 'POST',
+                url : ctxPath + '/regist/checkUsername',
+                data : { username : $.trim(val) },
+                dataType : 'JSON',
                 async : false,
                 success : function(data) {
-                    if (!data || !data.result) {
-                    	flag = false;
-                    }
+                	flag = data.success;
+                	msg = data.msg;
                 }
             });
-			if (!flag) { return '该邮箱已被注册'; }
+			if (!flag) { return msg; }
 		},
-		phone : function(value, item) {
-			if (!isPhone(value)) {
-				return '请输入正确的手机号';
+		password : function(val, item) {
+			if (isEmpty(val)) {
+				return '密码不能为空';
 			}
-			var flag = true;// 手机号是否已被注册
-			$.ajax({
-                type : 'post',
-                url : '/regist/checkPhone',
-                data : { phone : value},
-                dataType : 'json',
-                async : false,
-                success : function(data) {
-                    if (!data || !data.result) {
-                    	flag = false;
-                    }
-                }
-            });
-			if (!flag) { return '该手机号已被注册'; }
+			if (hasSpace(val)) {
+				return '密码中不能含有空格';
+			}
+			if ($.trim(val).length > 12 || $.trim(val).length < 6) {
+				return '密码长度应为6到12位';
+			}
 		},
-		pwd : [ /(.+){6,12}$/, '密码必须6到12位' ],
-		pwd2 : function(value, item) {
-			var pass = $('input[name=password]').val();
-			if (pass != value) {
+		password2 : function(val, item) {
+			var pwd = $('input[name=password]').val();
+			if (pwd != val) {
 				return '两次密码不一致';
 			}
 		},
-		nickName : function(value, item) {
-			if (isEmpty(value)) {
-		        return '请输入昵称';
+		email : function(val, item) {
+			if (!isEmail(val)) {
+				return '邮箱格式不正确';
 			}
-		},
-		code : function(value, item) {
-			if (isEmpty(value)) {
-		        return '请输入验证码';
-			}
-			var flag = true;// 验证码是否正确
+			var flag = true;
+			var msg = '';
 			$.ajax({
-                type : 'post',
-                url : '/regist/checkCode',
-                data : { code : value},
-                dataType : 'json',
+                type : 'POST',
+                url : ctxPath + '/regist/checkEmail',
+                data : { email : $.trim(val) },
+                dataType : 'JSON',
                 async : false,
                 success : function(data) {
-                    if (!data || !data.result) {
-                    	$(item).val('');
-                    	changeCaptcha();
-                    	flag = false;
-                    }
+                	flag = data.success;
+                	msg = data.msg;
                 }
             });
-			if (!flag) { return '验证码输入有误'; }
+			if (!flag) { return msg; }
 		},
-		protocol : function(value, item) {
-			if (!item.checked) {
-		        return '请阅读并同意《Timor网用户协议》';
+		validCode : function(val, item) {
+			if (isEmpty(val)) {
+		        return '请输入验证码';
 			}
+			var flag = true;
+			var msg = '';
+			$.ajax({
+                type : 'POST',
+                url : ctxPath + '/regist/checkCode',
+                data : { code : $.trim(val) },
+                dataType : 'JSON',
+                async : false,
+                success : function(data) {
+                	flag = data.success;
+                	msg = data.msg;
+                }
+            });
+			if (!flag) { return msg; }
 		}
 	});
 	
 	// 监听提交
 	form.on('submit(regist)', function(data) {
-
-		$.ajax({
-			type : 'post',
-            url: '/regist/regist',
-            data : data.field,
-            dataType : 'json',
-            async : false,
-            success : function(result) {
-            	if (result.success == true) {// true代表成功，其他代表失败
-            		layer.msg(result.msg);
-    	   		} else {
-    	   			layer.msg(result.msg);
-    	   		}
-            },
-            error : function(result) {
-            	layer.msg(result);
-            }
-        });
-		
-		return false;
 	});
 
 	form.render();
@@ -134,5 +96,5 @@ layui.use([ 'layer', 'form' ], function() {
 
 // 更新验证码
 var changeCaptcha = function() {
-	$("#captchaImg").attr('src', systemPath + '/captchaServlet?t=' + (new Date().getTime()));
+	$('#captchaImg').attr('src', ctxPath + '/captchaServlet?t=' + (new Date().getTime()));
 };
